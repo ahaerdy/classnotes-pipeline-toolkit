@@ -46,7 +46,7 @@ aula-pipeline-toolkit/
 ├── .gitignore
 │
 ├── config/
-│   └── processa_screen_capture.cfg.example   # modelo do arquivo de config (trilha/módulo/curso)
+│   └── processa_screen_capture.cfg   # modelo do arquivo de config (trilha/módulo/curso)
 │
 ├── scripts/
 │   ├── 01-captura_video/
@@ -203,7 +203,9 @@ O resultado é um único arquivo Markdown, pronto para uso direto no Obsidian.
 
 ## Exemplo de pipeline
 
-### Preparo do vídeo, exportação do áudio, geração da transcrição e do resumo:
+### cPreparo do vídeo, exportação do áudio, geração da transcrição e do resumo:
+
+Executar na pasta do arquivo `processa_screen_capture.cfg`(normalmente `000-Midia_e_Anexos`).
 
 ```bash
 processa_screen_capture.sh; processa_audio_v5.3.sh
@@ -264,7 +266,9 @@ processa_screen_capture.sh; processa_audio_v5.3.sh
 ==========================================================
 ```
 
-### Montagem do esqueleto, classificação de imagens e geração do PDF:
+### 2) Montagem do esqueleto, classificação de imagens e geração do PDF:
+
+Executar na sequência (na mesma pasta).
 
 ```java
 monta_esqueleto_e_prepara_pdf.sh
@@ -292,7 +296,7 @@ PDF gerado com sucesso: /home/arthur/Downloads/imagens.pdf
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-### Upload dos arquivos `imagens.pdf` e `esqueleto_enriquecido.md` e execução do `prompt_11`
+### 3) Upload dos arquivos `imagens.pdf` e `esqueleto_enriquecido.md` e execução do `prompt_11`
 
 <p align="center">
   <img src="000-Midia_e_Anexos/2026-07-02-15-32-13.png" alt="" width="480">
