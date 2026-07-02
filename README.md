@@ -325,10 +325,13 @@ Observe que o arquivo final ainda pode contar comentários em HTML (e, possivelm
 ---
 
 ## 📄 Licença
-Defina aqui a licença de sua preferência (ex.: MIT) — recomendável para repositórios de portfólio.
+
+Este projeto está licenciado sob a [LICENSE](LICENSE)
 
 ---
 
 ## ✍️ Autor
-Projeto pessoal de automação de fluxo de produção de material didático, desenvolvido para acelerar a criação de anotações de aula a partir de gravações de tela.# class-notes-pipeline-toolkit
-Pipeline automatizado que transforma gravação de aula (vídeo + capturas de tela) em anotações Markdown, com apoio de IA (Gemini/Whisper) para transcrição e resumo.
+
+**Arthur Haerdy Junior**
+
+Este projeto faz parte do meu ecossistema de produtividade e Engenharia de Dados, criado para otimizar a transformação de conteúdo técnico bruto em material de estudo estruturado.
