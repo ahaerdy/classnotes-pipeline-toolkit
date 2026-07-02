@@ -1,0 +1,127 @@
+matches:
+  - trigger: ":p11"
+    replace: |
+      #### Contexto Fixo — Leitura Obrigatória
+
+      Você receberá **dois artefatos**:
+
+      1. **Um PDF** contendo imagens extraídas de um vídeo  
+        - Uma imagem por página  
+        - Em ordem cronológica  
+        - O PDF é a única fonte visual válida  
+
+      2. **Um documento Markdown único**, que contém:
+        - O texto completo da aula
+        - Referências fixas às imagens (com nomes de arquivos exatos)
+        - Estrutura pronta para uso no Obsidian
+        - Marcações técnicas automáticas inseridas por pré-processamento
+
+      Esse documento Markdown é o **documento-base** e deve ser tratado como um **contrato estrutural imutável**.
+
+      ---
+
+      #### Regras Absolutas (Não Negociáveis)
+
+      - NÃO altere a estrutura do documento  
+      - NÃO remover, mover ou reordenar blocos de imagem  
+      - NÃO modificar nomes de arquivos de imagem  
+      - NÃO adicionar novas imagens  
+      - NÃO criar introduções genéricas ou conclusões artificiais  
+      - NÃO mencionar ou fazer referência a “transcrição”, “texto transcrito”, “narrativa transcrita” ou termos equivalentes  
+      - O texto-base é apenas material de referência.
+      - NÃO reproduza, resuma ou reapresente o texto-base na saída final.
+      - NÃO inventar associações se não houver segurança semântica  
+
+      ---
+
+      #### Ordem Obrigatória de Renderização
+
+      - Cada **bloco de imagem** deve aparecer **ANTES** de qualquer texto explicativo  
+      - O texto explicativo deve ser inserido **imediatamente após** a imagem correspondente  
+      - **É proibido** apresentar explicações antes da imagem a que se referem  
+      - **É proibido** mover imagens para depois do texto explicativo  
+
+      A ordem correta é sempre:
+
+      [BLOCO DE IMAGEM]  
+      [TEXTO EXPLICATIVO DA IMAGEM]
+
+      Qualquer inversão dessa ordem é considerada erro grave.
+
+      ---
+
+      #### Escopo Semântico Fechado por Imagem (Regra Crítica)
+
+      - Ao produzir a explicação de uma imagem, considere **EXCLUSIVAMENTE**:
+        - O conteúdo visual da **imagem imediatamente anterior**
+        - O conteúdo textual que se aplica diretamente a essa imagem
+      - **É proibido**:
+        - Utilizar informações que só aparecem em imagens posteriores
+        - Antecipar conceitos que só ficam claros no próximo slide
+      - Se a imagem for introdutória ou parcial:
+        - Limite-se a descrever exatamente o que ela apresenta
+        - NÃO complete a explicação usando conhecimento da imagem seguinte
+
+      ---
+
+      #### Regra de Autoverificação Obrigatória
+
+      Antes de escrever a explicação de cada imagem, valide internamente:
+
+      “Esta explicação faz sentido se o leitor ainda NÃO tiver visto a próxima imagem?”
+
+      - Se a resposta for NÃO:
+        - Reduza a explicação
+        - Ou adie o conteúdo para a imagem seguinte
+
+      ---
+
+      #### Tarefa
+
+      Usando **exclusivamente**:
+
+      - O conteúdo visual do PDF  
+      - O texto já presente no documento Markdown  
+
+      Você deve:
+
+      - Interpretar cada imagem individualmente  
+      - Associá-la semanticamente ao conteúdo textual correspondente  
+      - Produzir explicações didáticas, objetivas e contextualizadas  
+      - Inserir cada explicação **logo após a imagem correspondente**, respeitando rigorosamente a estrutura existente  
+
+      Se não for possível associar uma imagem com segurança, escreva exatamente:
+
+      *Conteúdo não identificado com segurança a partir do material disponível.*
+
+      ---
+
+      #### Imagens com Código
+
+      - Algumas imagens podem conter código  
+      - Outras não conterão  
+
+      Se a imagem **contiver código**:
+      - Transcreva fielmente o código  
+      - Utilize bloco de código Markdown  
+      - Identifique corretamente a linguagem (bash, python, javascript, etc.)
+
+      Se a imagem **não contiver código**:
+      - NÃO crie blocos de código artificiais  
+
+      ---
+
+      #### Documento Base — Estrutura Imutável
+
+      <<< CONTEÚDO COMPLETO DE esqueleto_enriquecido.md >>>
+
+      ---
+
+      #### Resultado Esperado
+
+      Um **único documento Markdown**, pronto para uso direto no Obsidian, em que:
+
+      - Todas as imagens permanecem intactas  
+      - Cada imagem possui explicação correta, sem defasagem semântica  
+      - O texto flui como material didático contínuo  
+      - Nenhuma edição manual posterior é necessária

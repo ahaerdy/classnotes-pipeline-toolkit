@@ -1,2 +1,241 @@
-# class-notes-pipeline-toolkit
+# 🎓 Pipeline de Produção de Material Didático a partir de Screen Capture
+
+Automação ponta a ponta que transforma a gravação bruta de uma aula (vídeo `.webm` + capturas de tela) em um **documento Markdown de anotações**, pronto para uso no Obsidian, com cada imagem da aula seguida do seu comentário didático correspondente — gerado com apoio de IA (Gemini, com fallback para Whisper local).
+
+Este repositório documenta e disponibiliza os scripts de cada etapa do fluxo, na ordem exata de execução.
+
+---
+
+## 🎯 Objetivo final
+
+A partir de:
+- um vídeo de captura de tela de uma aula (`screen-capture.webm`);
+- capturas de tela feitas durante a aula (`vlc*.jpg`);
+
+gerar um **único arquivo Markdown final**, contendo:
+- todas as imagens da aula, em ordem cronológica;
+- logo após cada imagem, uma explicação didática do seu conteúdo (incluindo transcrição de código, quando aplicável);
+- estrutura pronta para import direto no Obsidian, sem edição manual posterior.
+
+---
+
+## 🗺️ Visão geral do fluxo
+
+```mermaid
+flowchart TD
+    A["🎥 screen-capture.webm\n(~/Downloads)"] -->|"1. processa_screen_capture.sh"| B["🎞️ vídeo renomeado\n+ audio.mp3"]
+    B -->|"2. processa_audio_v5.3.sh"| C["📝 transcricao.md\n📋 resumo_notebooklm.md"]
+    D["🖼️ vlc*.jpg\n(~/Imagens, capturas manuais)"] --> E
+    C --> E["3. monta_esqueleto_e_prepara_pdf.sh"]
+    E --> F["pp_gera_esqueleto.py"]
+    F --> G["pp_classifica_imagens.py"]
+    G --> H["pp_gera_pdf.py"]
+    H --> I["📄 esqueleto.md\n📄 esqueleto_enriquecido.md\n📕 imagens.pdf"]
+    I -->|"4. upload manual + prompt_11.yml"| J["🤖 Chat com IA\n(Claude, ChatGPT, etc.)"]
+    J --> K["✅ Markdown final de anotações\n(pronto para Obsidian)"]
+```
+
+---
+
+## 📁 Estrutura de pastas sugerida do repositório
+
+```
+aula-pipeline-toolkit/
+├── README.md
+├── LICENSE
+├── .gitignore
+│
+├── config/
+│   └── processa_screen_capture.cfg.example   # modelo do arquivo de config (trilha/módulo/curso)
+│
+├── scripts/
+│   ├── 01-captura_video/
+│   │   └── processa_screen_capture.sh
+│   │
+│   ├── 02-transcricao_audio/
+│   │   └── processa_audio_v5.3.sh
+│   │
+│   └── 03-montagem_material/
+│       ├── monta_esqueleto_e_prepara_pdf.sh
+│       ├── pp_gera_esqueleto.py
+│       ├── pp_classifica_imagens.py
+│       └── pp_gera_pdf.py
+│
+├── prompts/
+│   └── prompt_11.yml         # snippet Espanso com o prompt para a etapa final (IA de chat)
+│
+└── docs/
+    └── fluxo.png             # (opcional) versão em imagem do diagrama do fluxo
+```
+
+> 💡 `config/processa_screen_capture.cfg.example` deve ser versionado como **exemplo** (com valores fictícios). O `.cfg` real, com seus dados de trilha/módulo/curso, deve ficar fora do controle de versão (adicione ao `.gitignore`).
+
+### `.gitignore` sugerido
+```gitignore
+*.cfg
+.env
+*.mp3
+*.mp4
+*.webm
+*.mkv
+*.jpg
+*.jpeg
+*.pdf
+*.md.bak
+esqueleto*.md
+transcricao.md
+resumo_notebooklm.md
+```
+
+---
+
+## ⚙️ Pré-requisitos
+
+| Ferramenta | Uso |
+|---|---|
+| `ffmpeg` | reparo de container de vídeo e extração de áudio |
+| `jq` | parsing de JSON nas chamadas de API |
+| `curl` | upload de áudio e chamadas à API Gemini |
+| Chave de API Gemini (`GEMINI_API_KEY`) em `~/bin/.env` | transcrição e resumo via IA |
+| `whisper` (OpenAI) instalado localmente | fallback caso todos os modelos Gemini falhem |
+| Python 3 + `pytesseract`, `Pillow` (`PIL`) | classificação de imagens (OCR) e geração do PDF |
+| `tesseract-ocr` instalado no sistema | motor de OCR usado pelo `pytesseract` |
+| Fonte `DejaVuSans.ttf` (opcional) | legendas no PDF gerado |
+
+Os três scripts Python (`pp_gera_esqueleto.py`, `pp_classifica_imagens.py`, `pp_gera_pdf.py`) precisam estar no `PATH` (por exemplo, em `~/bin`, com permissão de execução) para serem chamados diretamente pelo `monta_esqueleto_e_prepara_pdf.sh`.
+
+---
+
+## 🚀 Sequência de execução
+
+### Etapa 1 — Captura e preparo do vídeo/áudio
+**Script:** `scripts/01_captura_video/processa_screen_capture.sh`
+
+Executado na pasta onde vive o `processa_screen_capture.cfg` (não incluso no repo — veja `config/processa_screen_capture.cfg.example`).
+
+O que faz:
+1. Limpa arquivos residuais de execuções anteriores (`vlcsnap-*.jpg`, `debug_*`, `esqueleto*.md`, `imagens.pdf`, `transcricao.md`, `resumo_notebooklm.md`).
+2. Repara os timestamps do `~/Downloads/screen-capture.webm` via `ffmpeg -fflags +genpts`.
+3. Lê `nome_da_trilha`, `modulo` e `curso` do arquivo `.cfg` local.
+4. Descobre o próximo índice de vídeo disponível (`video_01`, `video_02`, ...) para não sobrescrever aulas anteriores.
+5. Renomeia o vídeo para o padrão `TRILHA-modulo.X-curso.Y-video_NN.webm` na pasta atual.
+6. Extrai o áudio para `~/Downloads/audio.mp3` via `ffmpeg` (libmp3lame).
+
+```bash
+cd /caminho/da/pasta/com/o/cfg
+./processa_screen_capture.sh
+```
+
+**Pré-condição:** o vídeo precisa estar em `~/Downloads/screen-capture.webm` e o `.cfg` precisa estar na pasta de execução.
+
+---
+
+### Etapa 2 — Transcrição e resumo do áudio
+**Script:** `scripts/02_transcricao_audio/processa_audio_v5.3.sh`
+
+O que faz:
+1. Valida a existência do `.env` (com `GEMINI_API_KEY`), do `audio.mp3` e da dependência `jq`.
+2. Faz upload do `audio.mp3` para a API de arquivos do Gemini (upload resumable).
+3. Aguarda o processamento (`state == ACTIVE`) do arquivo no lado do Google.
+4. Tenta gerar a **transcrição com timestamps** (a cada ~30s), testando uma lista de modelos em ordem de prioridade (`gemini-3-flash-preview` → `gemini-2.5-flash` → `gemini-2.0-flash` → `gemini-2.0-flash-lite`), com retry automático em erros 429.
+5. Se todos os modelos falharem, cai para transcrição local via **Whisper** (`--model small --language Portuguese`).
+6. Caso a transcrição via API tenha funcionado, gera também um **resumo estilo NotebookLM** com o mesmo mecanismo de fallback entre modelos.
+7. Salva `~/Downloads/transcricao.md` e `~/Downloads/resumo_notebooklm.md`.
+
+```bash
+./processa_audio_v5.3.sh          # modo silencioso
+./processa_audio_v5.3.sh -v       # modo verbose
+```
+
+> ⚠️ Se cair no fallback do Whisper, o resumo NotebookLM **não é gerado** (a lógica do script pula essa etapa nesse caso).
+
+---
+
+### Etapa 3 — Montagem do esqueleto, classificação de imagens e geração do PDF
+**Script:** `scripts/03_montagem_material/monta_esqueleto_e_prepara_pdf.sh`
+
+Orquestra, em sequência, os 3 scripts Python abaixo. Deve ser executado **depois** de capturar manualmente as telas da aula (via VLC, no formato `vlcsnap-HHhMMmSSsXXX.jpg`) em `~/Imagens`.
+
+1. **Copia** todos os `.jpg` de `~/Imagens` para a pasta atual.
+2. Executa `pp_gera_esqueleto.py`
+3. Executa `pp_classifica_imagens.py`
+4. Executa `pp_gera_pdf.py`
+5. Duplica `esqueleto_enriquecido.md` como `esqueleto_enriquecido.txt` (facilita upload em interfaces que não aceitam `.md`).
+
+```bash
+cd /pasta/de/trabalho/da/aula
+./monta_esqueleto_e_prepara_pdf.sh
+```
+
+#### 3.1 `pp_gera_esqueleto.py`
+- Varre `~/Imagens` em busca de arquivos `vlc*.jpg` cujo nome contenha timestamp no padrão `HHhMMmSSs mmm` (formato de captura do VLC).
+- Ordena as imagens cronologicamente pelo timestamp extraído do nome do arquivo.
+- Lê `~/Downloads/transcricao.md`.
+- Gera `~/Downloads/esqueleto.md`: um bloco `<img>` por imagem (caminho fixo `000-Midia_e_Anexos/<arquivo>`), seguido de um comentário HTML com instruções para a IA (o que fazer com aquela imagem), e ao final anexa a transcrição completa da aula como apêndice, delimitada por marcadores `<!-- INÍCIO/FIM DA TRANSCRIÇÃO -->`.
+
+#### 3.2 `pp_classifica_imagens.py`
+- Lê `~/Downloads/esqueleto.md`.
+- Para cada bloco de imagem, roda **OCR** (`pytesseract`) sobre o arquivo correspondente.
+- Aplica heurísticas simples (regex) para classificar o conteúdo como **código** (detectando padrões como `def`, `class`, `import`, `echo`, `git`, símbolos de sintaxe) ou **slide conceitual**, e tenta inferir a linguagem (`python`, `bash`, `javascript`).
+- Insere comentários HTML de metadado (`<!-- TIPO_DE_IMAGEM -->`, `<!-- POSSIVEL_LINGUAGEM -->`, `<!-- CONFIANCA -->`) logo após cada bloco de imagem.
+- Gera `~/Downloads/esqueleto_enriquecido.md`.
+
+#### 3.3 `pp_gera_pdf.py`
+- Lê `~/Downloads/esqueleto_enriquecido.md` e extrai, via regex, os nomes de arquivo de todas as imagens referenciadas.
+- Abre cada imagem em `~/Imagens`, grava o nome do arquivo como legenda sobre a própria imagem.
+- Compila todas as imagens, em ordem, em um único PDF: `~/Downloads/imagens.pdf`.
+
+> 📌 O PDF existe para dar à IA de chat (etapa 4) uma **fonte visual confiável e sequencial** das imagens, já que nem toda interface de chat processa bem múltiplos anexos de imagem soltos.
+
+---
+
+### Etapa 4 — Geração das anotações finais via IA de chat
+**Prompt:** `prompts/prompt_11.yml`
+
+Passos manuais:
+1. Fazer upload, na interface de chat de sua preferência, dos dois artefatos gerados:
+   - `~/Downloads/imagens.pdf` (fonte visual, uma imagem por página, em ordem cronológica);
+   - `~/Downloads/esqueleto_enriquecido.md` (documento-base com estrutura, nomes de arquivo e metadados de classificação).
+2. Disparar o snippet `:p11` (gerenciado via [Espanso](https://espanso.org/)), que expande para o prompt completo definido em `prompt_11.yml`.
+
+O prompt instrui a IA a:
+- tratar o Markdown como um **contrato estrutural imutável** (não reordenar, renomear ou remover blocos de imagem);
+- sempre apresentar **a imagem antes** do texto explicativo correspondente;
+- restringir cada explicação **exclusivamente** ao conteúdo da imagem imediatamente anterior (proibido antecipar conteúdo de imagens seguintes);
+- transcrever fielmente blocos de código, com a linguagem correta, quando a imagem contiver código;
+- não mencionar a existência de uma "transcrição" no resultado final (a transcrição é apenas contexto interno, não deve aparecer redigida na saída);
+- declarar explicitamente quando não for possível associar uma imagem ao conteúdo com segurança.
+
+O resultado é um único arquivo Markdown, pronto para uso direto no Obsidian.
+
+---
+
+## 🧵 Resumo passo a passo (checklist rápido)
+
+1. [ ] Gravar a aula → `~/Downloads/screen-capture.webm`
+2. [ ] Capturar telas relevantes durante a aula com o VLC → `~/Imagens/vlcsnap-*.jpg`
+3. [ ] `./processa_screen_capture.sh` (na pasta do `.cfg`)
+4. [ ] `./processa_audio_v5.3.sh`
+5. [ ] `./monta_esqueleto_e_prepara_pdf.sh`
+6. [ ] Upload de `imagens.pdf` + `esqueleto_enriquecido.md` no chat de IA
+7. [ ] Disparar `:p11` e revisar o Markdown final
+8. [ ] Salvar o resultado nas anotações do curso 🎉
+
+---
+
+## 🛠️ Possíveis melhorias futuras
+- Empacotar as etapas 1–3 em um único script "mestre" com tratamento de erro entre etapas.
+- Adicionar testes automatizados para as heurísticas de classificação de imagem (`pp_classifica_imagens.py`).
+- Permitir configurar o modelo de IA e o idioma via variáveis de ambiente em vez de edição direta do script.
+- Automatizar a etapa 4 via API (hoje é manual, feita em interface de chat).
+
+---
+
+## 📄 Licença
+Defina aqui a licença de sua preferência (ex.: MIT) — recomendável para repositórios de portfólio.
+
+---
+
+## ✍️ Autor
+Projeto pessoal de automação de fluxo de produção de material didático, desenvolvido para acelerar a criação de anotações de aula a partir de gravações de tela.# class-notes-pipeline-toolkit
 Pipeline automatizado que transforma gravação de aula (vídeo + capturas de tela) em anotações Markdown, com apoio de IA (Gemini/Whisper) para transcrição e resumo.
