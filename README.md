@@ -343,14 +343,6 @@ Este projeto está licenciado sob a [MIT LICENSE](LICENSE).
 ## ✍️ Autor
 
 **Arthur Haerdy Junior** 
--Electronic Engineer • Data & Analytics • Full-Stack • AI & Cloud • Linux SysAdmin
+Electronic Engineer • Data & Analytics • Full-Stack • AI & Cloud • Linux SysAdmin
 
-Contato Linkedin: / [arthur-haerdy-jr](https://www.linkedin.com/in/arthur-haerdy-jr/)
-
-<p align="center">
-  <a href="https://www.linkedin.com/in/arthur-haerdy-jr/" style="text-decoration: none;">
-    <img alt="LinkedIn" title="Conecte-se comigo no LinkedIn" 
-         src="https://custom-icon-badges.demolab.com/badge/-LinkedIn-282A36?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=634781" 
-         style="height: 27px;" />
-  </a>
-</p>
+<img src="000-Midia_e_Anexos/linkedin-logo.png?raw=true" height="18"/> / [arthur-haerdy-jr](https://www.linkedin.com/in/arthur-haerdy-jr/)
