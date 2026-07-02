@@ -224,7 +224,12 @@ O resultado é um único arquivo Markdown, pronto para uso direto no Obsidian.
 ## Exemplo de execução
 
 ```bash
-❯ processa_screen_capture.sh; processa_audio_v5.3.sh
+processa_screen_capture.sh; processa_audio_v5.3.sh
+```
+
+### Saída:
+
+```bash
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🎬  Iniciando o Processamento da Aula
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -275,8 +280,13 @@ O resultado é um único arquivo Markdown, pronto para uso direto no Obsidian.
 ==========================================================
 ✨ CONCLUÍDO EM 2m 59s
 ==========================================================
-❯ r
-❯ monta_esqueleto_e_prepara_pdf.sh
+```
+
+```java
+monta_esqueleto_e_prepara_pdf.sh
+```
+
+```bash
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📸  Iniciando Fluxo de Documentação de Aula
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
