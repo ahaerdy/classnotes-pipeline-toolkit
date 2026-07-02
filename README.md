@@ -1,4 +1,4 @@
-# 🎓 Pipeline de Produção de Material Didático a partir de Screen Capture
+# 🎓 Pipeline de Produção de Material Didático a partir de Videoaulas
 
 Automação ponta a ponta que transforma a gravação bruta de uma aula (vídeo `.webm` + capturas de tela) em um **documento Markdown de anotações**, pronto para uso, com cada imagem da aula seguida do seu comentário didático correspondente — gerado com apoio de IA (Gemini, com fallback para Whisper local).
 
