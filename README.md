@@ -37,7 +37,7 @@ flowchart TD
 
 ---
 
-## 📁 Estrutura de pastas sugerida do repositório
+## 📁 Estrutura de pastas do repositório
 
 ```
 aula-pipeline-toolkit/
@@ -63,29 +63,9 @@ aula-pipeline-toolkit/
 │
 ├── prompts/
 │   └── prompt_11.yml         # snippet Espanso com o prompt para a etapa final (IA de chat)
-│
-└── docs/
-    └── fluxo.png             # (opcional) versão em imagem do diagrama do fluxo
 ```
 
 > 💡 `config/processa_screen_capture.cfg.example` deve ser versionado como **exemplo** (com valores fictícios). O `.cfg` real, com seus dados de trilha/módulo/curso, deve ficar fora do controle de versão (adicione ao `.gitignore`).
-
-### `.gitignore` sugerido
-```gitignore
-*.cfg
-.env
-*.mp3
-*.mp4
-*.webm
-*.mkv
-*.jpg
-*.jpeg
-*.pdf
-*.md.bak
-esqueleto*.md
-transcricao.md
-resumo_notebooklm.md
-```
 
 ---
 
