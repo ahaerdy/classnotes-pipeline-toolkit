@@ -304,9 +304,7 @@ PDF gerado com sucesso: /home/arthur/Downloads/imagens.pdf
 
 ## Resultado final
 
-### Exemplo de arquivo gerado: 
-
-- [aula-maven-lombok-mapstruct.md](resultado/aula-maven-lombok-mapstruct.md)
+### Exemplo de arquivo gerado: [aula-maven-lombok-mapstruct.md](resultado/aula-maven-lombok-mapstruct.md)
 
 Trecho:
 
