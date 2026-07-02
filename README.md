@@ -343,4 +343,4 @@ Este projeto está licenciado sob a [MIT LICENSE](LICENSE).
 ## ✍️ Autor
 
 **Arthur Haerdy Jr** 
-<br><img src="000-Midia_e_Anexos/linkedin-logo2.png?raw=true" height="18"/> / [arthur-haerdy-jr](https://www.linkedin.com/in/arthur-haerdy-jr/)
+in / [arthur-haerdy-jr](https://www.linkedin.com/in/arthur-haerdy-jr/)
