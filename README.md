@@ -304,9 +304,11 @@ PDF gerado com sucesso: /home/arthur/Downloads/imagens.pdf
 
 ## Resultado final
 
-### Exemplo de arquivo gerado (formato raw): [aula-maven-lombok-mapstruct.md](https://raw.githubusercontent.com/ahaerdy/classnotes-pipeline-toolkit/refs/heads/main/resultado/aula-maven-lombok-mapstruct.md)
+### Exemplo de arquivo gerado
+ 
+ ⚠️ formato raw: [aula-maven-lombok-mapstruct.md](https://raw.githubusercontent.com/ahaerdy/classnotes-pipeline-toolkit/refs/heads/main/resultado/aula-maven-lombok-mapstruct.md)
 
-Trecho:
+Trecho (captura):
 
 <p align="center">
   <img src="000-Midia_e_Anexos/2026-07-02-15-54-48.png" alt="" width="480">
