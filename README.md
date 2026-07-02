@@ -65,8 +65,6 @@ aula-pipeline-toolkit/
 │   └── prompt_11.yml         # snippet Espanso com o prompt para a etapa final (IA de chat)
 ```
 
-> 💡 `config/processa_screen_capture.cfg.example` deve ser versionado como **exemplo** (com valores fictícios). O `.cfg` real, com seus dados de trilha/módulo/curso, deve ficar fora do controle de versão (adicione ao `.gitignore`).
-
 ---
 
 ## ⚙️ Pré-requisitos
