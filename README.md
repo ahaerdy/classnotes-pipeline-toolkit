@@ -221,6 +221,81 @@ O resultado é um único arquivo Markdown, pronto para uso direto no Obsidian.
 7. [ ] Disparar `:p11` e revisar o Markdown final
 8. [ ] Salvar o resultado nas anotações do curso 🎉
 
+## Exemplo de execução
+
+```bash
+❯ processa_screen_capture.sh; processa_audio_v5.3.sh
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎬  Iniciando o Processamento da Aula
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 [1/6] Verificando se o vídeo está em Downloads...
+    ✅ Vídeo localizado!
+🛠️  [2/6] Corrigindo timestamps do vídeo (ffmpeg)...
+[opus @ 0x5c98b33f51c0] Error parsing Opus packet header.
+    ✅ Vídeo estabilizado e movido para a pasta de trabalho.
+📋 [3/6] Lendo arquivo de configuração...
+    ✅ Configurações carregadas: bootcamp_ntt_data_java_spring_ai
+🔢 [4/6] Calculando o próximo número da sequência...
+    ✅ O próximo arquivo será o de número: 05
+🏷️  [5/6] Aplicando nome oficial ao arquivo...
+    ✅ Pronto: bootcamp_ntt_data_java_spring_ai-modulo.03-curso.03-video_05.webm
+🎵 [6/6] Extraindo áudio para revisão...
+[opus @ 0x62310733d800] Error parsing Opus packet header.
+    ✅ Áudio salvo em: ~/Downloads/audio.mp3
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨  Terminado!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 Validando arquivos...
+----------------------------------------------------------
+🤖 Modelos disponíveis (em ordem de prioridade):
+   1. gemini-3-flash-preview
+   2. gemini-2.5-flash
+   3. gemini-2.0-flash
+   4. gemini-2.0-flash-lite
+   5. Whisper (fallback final)
+📝 VERSÃO 5.2.1 - Temporizador Ativo
+🚀 Processando: audio.mp3
+----------------------------------------------------------
+📤 Preparando upload para o Google Cloud...
+📤 Enviando bytes do arquivo...
+✅ Upload concluído: files/0ggm3idxs2ml
+⏳ Google processando o áudio
+✅ Áudio pronto para processamento!
+🎯 [1/2] Gerando transcrição formatada com timestamps...
+🔄 Tentando com modelo: gemini-3-flash-preview
+🔄 Tentando com modelo: gemini-2.5-flash
+   ✅ Sucesso com gemini-2.5-flash!
+✅ Transcrição salva!
+📚 [2/2] Gerando resumo NotebookLM...
+🔄 Tentando com modelo: gemini-3-flash-preview
+🔄 Tentando com modelo: gemini-2.5-flash
+🔄 Tentando com modelo: gemini-2.0-flash
+🔄 Tentando com modelo: gemini-2.0-flash-lite
+✅ Resumo salvo!
+==========================================================
+✨ CONCLUÍDO EM 2m 59s
+==========================================================
+❯ r
+❯ monta_esqueleto_e_prepara_pdf.sh
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📸  Iniciando Fluxo de Documentação de Aula
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📂 [1/4] Coletando imagens JPG de ~/Imagens...
+    ✅ Imagens copiadas para a pasta atual.
+🏗️  [2/4] Executando: pp_gera_esqueleto.py...
+Esqueleto Markdown gerado com sucesso: /home/arthur/Downloads/esqueleto.md
+    ✅ Estrutura criada com sucesso.
+🏷️  [3/4] Executando: pp_classifica_imagens.py...
+esqueleto_enriquecido.md gerado com sucesso em /home/arthur/Downloads/esqueleto_enriquecido.md
+    ✅ Imagens classificadas.
+📄 [4/4] Executando: pp_gera_pdf.py...
+PDF gerado com sucesso: /home/arthur/Downloads/imagens.pdf
+    ✅ PDF gerado com sucesso!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨  Fluxo finalizado com sucesso!  🚀
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
 ---
 
 ## 🛠️ Possíveis melhorias futuras
