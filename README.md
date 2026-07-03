@@ -23,14 +23,13 @@ gerar um **único arquivo Markdown final**, contendo:
 
 ```mermaid
 flowchart TD
-    A["🎥 screen-capture.webm\n(~/Downloads)"] -->|"1. processa_screen_capture.sh"| B["🎞️ vídeo renomeado\n+ audio.mp3"]
-    B -->|"2. processa_audio_v5.3.sh"| C["📝 transcricao.md\n📋 resumo_notebooklm.md"]
+    A["🎥 screen-capture.webm\n(~/Downloads)"] -->|"1. 🐚 processa_screen_capture.sh"| B["🎞️ vídeo renomeado\n+ audio.mp3"]
+    B -->|"2. 🐚 processa_audio_v5.3.sh"| C["📝 transcricao.md\n📋 resumo_notebooklm.md"]
     D["🖼️ vlc*.jpg\n(~/Imagens, capturas manuais)"] --> E
-- <img src="000-Midia_e_Anexos/bash_transparent.png?raw=true" height="18"/> **Python (Ferramentas & Automação)**
-    C --> E["3. monta_esqueleto_e_prepara_pdf.sh"]
-    E --> F["pp_gera_esqueleto.py"]
-    F --> G["pp_classifica_imagens.py"]
-    G --> H["pp_gera_pdf.py"]
+    C --> E["3. 🐚 monta_esqueleto_e_prepara_pdf.sh"]
+    E --> F["🐍 pp_gera_esqueleto.py"]
+    F --> G["🐍 pp_classifica_imagens.py"]
+    G --> H["🐍 pp_gera_pdf.py"]
     H --> I["📄 esqueleto.md\n📄 esqueleto_enriquecido.md\n📕 imagens.pdf"]
     I -->|"4. upload manual + prompt_11.yml"| J["🤖 Chat com IA\n(Claude, ChatGPT, etc.)"]
     J --> K["✅ Markdown final de anotações"]
