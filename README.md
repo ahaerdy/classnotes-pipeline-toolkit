@@ -26,24 +26,26 @@ flowchart TD
     %% Definição das classes de estilo
     classDef python fill:#e8f5e9,stroke:#2e7d32,stroke-width:2px,color:#1b5e20;
     classDef shell fill:#e3f2fd,stroke:#1565c0,stroke-width:2px,color:#0d47a1;
-    classDef doc fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#bf360c;
+    classDef midia fill:#fff3e0,stroke:#ef6c00,stroke-width:2px,color:#bf360c;
+    classDef doc fill:#ffffff,stroke:#333333,stroke-width:2px,color:#000000;
     classDef ai fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c;
 
-    A["🎥 screen-capture.webm\n(~/Downloads)"] -->|"1. processa_screen_capture.sh"| B["🎞️ vídeo renomeado\n+ audio.mp3"]
-    B -->|"2. processa_audio_v5.3.sh"| C["📝 transcricao.md\n📋 resumo_notebooklm.md"]
+    A["🎥 screen-capture.webm\n(~/Downloads)"] -->B1["1. processa_screen_capture.sh"] -->B2["🎞️ vídeo renomeado\n+ audio.mp3\n(~/Downloads)"]
+    B2 --> C1["2. processa_audio_v5.3.sh"] --> C2["📝 transcricao.md\n📝 resumo_notebooklm.md"]
     D["🖼️ vlc*.jpg\n(~/Imagens, capturas manuais)"] --> E
-    C --> E["3. monta_esqueleto_e_prepara_pdf.sh"]
+    C2 --> E["3. monta_esqueleto_e_prepara_pdf.sh"]
     E --> F["pp_gera_esqueleto.py"]
     F --> G["pp_classifica_imagens.py"]
     G --> H["pp_gera_pdf.py"]
-    H --> I["📄 esqueleto.md\n📄 esqueleto_enriquecido.md\n📕 imagens.pdf"]
+    H --> I["📝 esqueleto.md\n📝 esqueleto_enriquecido.md\n📕 imagens.pdf"]
     I -->|"4. upload manual + prompt_11.yml"| J["🤖 Chat com IA\n(Claude, ChatGPT, etc.)"]
     J --> K["✅ Markdown final de anotações"]
 
     %% Aplicando as classes
     class F,G,H python;
-    class E,B shell;
-    class A,C,I doc;
+    class E,B1,C1 shell;
+    class A,B2,D midia;
+    class C2,I,K doc;
     class J ai;
 ```
 
