@@ -146,7 +146,7 @@ O que faz:
 
 ---
 
-### Etapa 3 — Conversão de formato de imagens
+### Etapa 3 — Conversão de formato
 **Script:** `scripts/03-converte_imagens/convertALL_png_to_jpg.sh`
 
 O que faz: 
