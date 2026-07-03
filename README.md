@@ -197,7 +197,7 @@ O resultado é um único arquivo Markdown, pronto para uso direto no Obsidian.
 5. [ ] `./monta_esqueleto_e_prepara_pdf.sh`
 6. [ ] Upload de `imagens.pdf` + `esqueleto_enriquecido.md` no chat de IA
 7. [ ] Disparar `:p11` e revisar o Markdown final
-8. [ ] Salvar o resultado nas anotações do curso 🎉
+8. [ ] Salvar o resultado nas anotações do curso 
 
 ## Exemplo de pipeline
 
