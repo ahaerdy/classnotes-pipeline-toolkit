@@ -362,7 +362,7 @@ A captura abaixo (apenas um trecho) demonstra o resultado final após a execuç�
 
 ---
 
-## 📄 Licença
+## Licença
 
 Este projeto está disponibilizado sob a licença [`MIT LICENSE`](./LICENSE).
 
