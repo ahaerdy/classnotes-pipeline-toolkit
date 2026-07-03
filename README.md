@@ -30,15 +30,15 @@ flowchart TD
     classDef doc fill:#ffffff,stroke:#333333,stroke-width:2px,color:#000000;
     classDef ai fill:#f3e5f5,stroke:#7b1fa2,stroke-width:2px,color:#4a148c;
 
-    A["🎥 screen-capture.webm\n(~/Downloads)"] -->B1["1. processa_screen_capture.sh"] -->B2["🎞️ vídeo renomeado\n+ audio.mp3\n(~/Downloads)"]
-    B2 --> C1["2. processa_audio_v5.3.sh"] --> C2["📝 transcricao.md\n📝 resumo_notebooklm.md"]
-    D["🖼️ vlc*.jpg\n(~/Imagens, capturas manuais)"] --> E
+    A["screen-capture.webm\n(~/Downloads)"] -->B1["1. processa_screen_capture.sh"] -->B2["vídeo renomeado\n+ audio.mp3\n(~/Downloads)"]
+    B2 --> C1["2. processa_audio_v5.3.sh"] --> C2["transcricao.md +\nresumo_notebooklm.md"]
+    D["vlc*.jpg\n(~/Imagens, capturas manuais)"] --> E
     C2 --> E["3. monta_esqueleto_e_prepara_pdf.sh"]
     E --> F["pp_gera_esqueleto.py"]
     F --> G["pp_classifica_imagens.py"]
     G --> H["pp_gera_pdf.py"]
-    H --> I["📝 esqueleto.md\n📝 esqueleto_enriquecido.md\n📕 imagens.pdf"]
-    I -->|"4. upload manual + prompt_11.yml"| J["🤖 Chat com IA\n(Claude, ChatGPT, etc.)"]
+    H --> I["esqueleto.md,\nesqueleto_enriquecido.md,\nimagens.pdf"]
+    I --> J["🤖 Chat com IA\n(Claude, ChatGPT, etc.)\nUpload manual + prompt_11.yml"]
     J --> K["✅ Markdown final de anotações"]
 
     %% Aplicando as classes
